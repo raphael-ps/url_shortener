@@ -8,8 +8,8 @@ CREATE EVENT IF NOT EXISTS MoveExpiredUrls
 DO
 BEGIN
 
-    INSERT INTO expired_urls (Original_Id, Original_url, Url_nickname, Clicks, ACCESSES, Created_date, Expiration_date, Url_password, Created_by)
-    SELECT Id, Original_url, Url_nickname, Clicks, ACCESSES, Created_date, Expiration_date, Url_password, Created_by
+    INSERT INTO expired_urls (Original_Id, Original_url, Url_nickname, Clicks_count, ACCESSES_count, Created_date, Expiration_date, Url_password, Created_by)
+    SELECT Id, Original_url, Url_nickname, Clicks_count, ACCESSES_count, Created_date, Expiration_date, Url_password, Created_by
     FROM urls
     WHERE Expiration_date <= current_timestamp;
 
