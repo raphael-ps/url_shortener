@@ -11,13 +11,15 @@ import java.time.Instant;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of="id")
 
 public class Url {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String url_original;
-    private String url_nickname;
+    @Column(name = "url_nickname")
+    private String urlNickname;
     private int clicks_count;
     private int accesses_count;
     private Instant created_date;
@@ -26,14 +28,14 @@ public class Url {
     private String created_by;
 
     public Url(ResquestUrlPostDTO url){
-        this.url_original = url.url_original();
-        this.url_nickname = url.url_nickname();
+        this.url_original = url.urlOriginal();
+        this.urlNickname = url.urlNickname();
         this.created_date = Instant.now();
 
-        if (url.expiration_date() == null){
+        if (url.expirationDate() == null){
             this.expiration_date = Instant.now().plus(Duration.ofDays(3));
         } else {
-            this.expiration_date = url.expiration_date();
+            this.expiration_date = url.expirationDate();
         }
     }
 }

@@ -8,10 +8,10 @@ import java.time.Instant;
 
 public record ResquestUrlPostDTO(
     @NotBlank
-    String url_original,
+    String urlOriginal,
     @NotEmpty
-    String url_nickname,
-    Instant expiration_date
+    String urlNickname,
+    Instant expirationDate
 )
 {
 }
