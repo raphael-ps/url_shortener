@@ -1,4 +1,4 @@
-package io.github.raphael.url_shortener.domain.urls;
+package io.github.raphael.url_shortener.domain.short_url;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotEmpty;
 import java.time.Instant;
 
 
-public record ResquestUrlPostDTO(
+public record RequestShortUrlPostDTO(
     @NotBlank
-    String urlOriginal,
+    String originalUrl,
     @NotEmpty
-    String urlNickname,
+    String nickname,
     Instant expirationDate
 )
 {

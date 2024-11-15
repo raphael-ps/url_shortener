@@ -1,4 +1,4 @@
-package io.github.raphael.url_shortener.domain.urls;
+package io.github.raphael.url_shortener.domain.short_url;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,31 +6,29 @@ import lombok.*;
 import java.time.Duration;
 import java.time.Instant;
 
-@Table(name = "urls")
-@Entity(name = "urls")
+@Table(name = "short_url")
+@Entity(name = "short_url")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of="id")
 
-public class Url {
+public class ShortUrl {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String url_original;
-    @Column(name = "url_nickname")
-    private String urlNickname;
+    private String url_id;
+    private String user_id;
+    private String nickname;
     private int clicks_count;
     private int accesses_count;
-    private Instant created_date;
+    private Instant creation_date;
     private Instant expiration_date;
-    private String url_password;
-    private String created_by;
+    private String password;
 
-    public Url(ResquestUrlPostDTO url){
-        this.url_original = url.urlOriginal();
-        this.urlNickname = url.urlNickname();
-        this.created_date = Instant.now();
+    public ShortUrl(RequestShortUrlPostDTO url){
+        this.nickname = url.nickname();
+        this.creation_date = Instant.now();
 
         if (url.expirationDate() == null){
             this.expiration_date = Instant.now().plus(Duration.ofDays(3));

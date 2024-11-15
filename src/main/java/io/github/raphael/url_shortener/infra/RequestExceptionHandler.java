@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RequestExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Object> hanldeDataIntegrityViolantion(DataIntegrityViolationException exception){
+    public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException exception){
         String message = "An error occurred while processing the request.\n";
 
         if (exception.getCause() instanceof ConstraintViolationException) {
