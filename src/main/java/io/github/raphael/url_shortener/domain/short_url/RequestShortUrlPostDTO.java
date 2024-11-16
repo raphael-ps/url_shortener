@@ -11,6 +11,8 @@ public record RequestShortUrlPostDTO(
     String originalUrl,
     @NotEmpty
     String nickname,
+    String user_id,
+    String password,
     Instant expirationDate
 )
 {

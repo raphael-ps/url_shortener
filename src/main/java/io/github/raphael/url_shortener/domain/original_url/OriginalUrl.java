@@ -20,5 +20,6 @@ public class OriginalUrl {
 
     public OriginalUrl(String url){
         this.url = url;
+        this.times_shortened = 1;
     }
 }

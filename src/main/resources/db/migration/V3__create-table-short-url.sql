@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS short_url(
     accesses_count INT NOT NULL DEFAULT 0,
     creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expiration_date TIMESTAMP NOT NULL,
-    password CHAR(36) DEFAULT NULL,
+    password VARCHAR(100) DEFAULT NULL,
 
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE SET NULL,

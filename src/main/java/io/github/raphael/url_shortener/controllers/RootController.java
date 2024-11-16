@@ -7,11 +7,10 @@ import io.github.raphael.url_shortener.domain.short_url.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+
 
 import java.util.Optional;
 
@@ -30,6 +29,7 @@ public class RootController {
 
     @PostMapping
     public ResponseEntity<String> registerUrl(@RequestBody @Valid RequestShortUrlPostDTO newUrl){
+
         Optional<OriginalUrl> existingOriginalUrl = originalUrlRepository.findByUrl(newUrl.originalUrl());
         OriginalUrl originalUrl;
 
@@ -60,6 +60,10 @@ public class RootController {
         ShortUrl shortUrl = urlOptional.get();
         shortUrl.setClicks_count(shortUrl.getClicks_count() + 1);
         shortUrl.setAccesses_count(shortUrl.getAccesses_count() + 1);
+
+        if (shortUrl.getPassword() != null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Shortened link protected with password.");
+        }
 
         Optional<OriginalUrl> originalUrlOptional = originalUrlRepository.findById(shortUrl.getUrl_id());
 

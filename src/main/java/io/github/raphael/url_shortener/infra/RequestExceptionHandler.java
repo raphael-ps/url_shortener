@@ -14,7 +14,7 @@ public class RequestExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException exception){
         String message = "An error occurred while processing the request.\n";
-
+        System.out.println(exception);
         if (exception.getCause() instanceof ConstraintViolationException) {
             message += "Nickname already exists. Please choose another nickname.";
         }

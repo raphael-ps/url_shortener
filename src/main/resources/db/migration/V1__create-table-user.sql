@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS user(
     id CHAR(36) NOT NULL,
     username VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     email VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
