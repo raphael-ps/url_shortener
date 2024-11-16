@@ -1,11 +1,14 @@
-package io.github.raphael.url_shortener.controllers;
+package io.github.raphael.url_shortener.controller;
 
-import io.github.raphael.url_shortener.domain.original_url.OriginalUrl;
-import io.github.raphael.url_shortener.domain.original_url.OriginalUrlRepository;
-import io.github.raphael.url_shortener.domain.short_url.*;
+import io.github.raphael.url_shortener.dto.RequestShortUrlPostDTO;
+import io.github.raphael.url_shortener.model.OriginalUrl;
+import io.github.raphael.url_shortener.model.ShortUrl;
+import io.github.raphael.url_shortener.repository.OriginalUrlRepository;
 
+import io.github.raphael.url_shortener.repository.ShortUrlRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +19,18 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/")
-public class RootController {
+public class ShortUrlController {
 
     private final OriginalUrlRepository originalUrlRepository;
     private final ShortUrlRepository shortUrlRepository;
 
     @Autowired
-    public RootController(ShortUrlRepository shortUrlRepository, OriginalUrlRepository originalUrlRepository) {
+    public ShortUrlController(ShortUrlRepository shortUrlRepository, OriginalUrlRepository originalUrlRepository) {
         this.shortUrlRepository = shortUrlRepository;
         this.originalUrlRepository = originalUrlRepository;
     }
 
-    @PostMapping
+    @PostMapping("/shorten")
     public ResponseEntity<String> registerUrl(@RequestBody @Valid RequestShortUrlPostDTO newUrl){
 
         Optional<OriginalUrl> existingOriginalUrl = originalUrlRepository.findByUrl(newUrl.originalUrl());
@@ -50,7 +53,7 @@ public class RootController {
 
     @GetMapping("/{url_nickname}")
     @Transactional
-    public ResponseEntity<String> fetchSorthenedUrl(@PathVariable String url_nickname){
+    public ResponseEntity<String> fetchSorthenedUrl(@PathVariable @NotEmpty String url_nickname){
         Optional<ShortUrl> urlOptional = shortUrlRepository.findByNickname(url_nickname);
 
         if (urlOptional.isEmpty()){
@@ -59,12 +62,12 @@ public class RootController {
 
         ShortUrl shortUrl = urlOptional.get();
         shortUrl.setClicks_count(shortUrl.getClicks_count() + 1);
-        shortUrl.setAccesses_count(shortUrl.getAccesses_count() + 1);
 
         if (shortUrl.getPassword() != null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Shortened link protected with password.");
         }
 
+        shortUrl.setAccesses_count(shortUrl.getAccesses_count() + 1);
         Optional<OriginalUrl> originalUrlOptional = originalUrlRepository.findById(shortUrl.getUrl_id());
 
         if (originalUrlOptional.isEmpty()){

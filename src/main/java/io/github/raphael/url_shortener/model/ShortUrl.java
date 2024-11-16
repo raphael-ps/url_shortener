@@ -1,5 +1,6 @@
-package io.github.raphael.url_shortener.domain.short_url;
+package io.github.raphael.url_shortener.model;
 
+import io.github.raphael.url_shortener.dto.RequestShortUrlPostDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -30,7 +31,7 @@ public class ShortUrl {
     public ShortUrl(RequestShortUrlPostDTO url){
         this.nickname = url.nickname();
         this.creation_date = Instant.now();
-        this.password = BCrypt.hashpw(url.password(), BCrypt.gensalt());
+        this.password = url.password() == null ? null : BCrypt.hashpw(url.password(), BCrypt.gensalt());
         this.user_id = url.user_id();
 
         if (url.expirationDate() == null){

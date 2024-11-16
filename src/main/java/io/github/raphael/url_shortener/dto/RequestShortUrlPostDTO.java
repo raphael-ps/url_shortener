@@ -1,4 +1,4 @@
-package io.github.raphael.url_shortener.domain.short_url;
+package io.github.raphael.url_shortener.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

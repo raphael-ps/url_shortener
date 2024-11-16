@@ -1,4 +1,4 @@
-package io.github.raphael.url_shortener.domain.original_url;
+package io.github.raphael.url_shortener.model;
 
 import jakarta.persistence.*;
 import lombok.*;

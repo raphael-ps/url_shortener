@@ -1,5 +1,6 @@
-package io.github.raphael.url_shortener.domain.original_url;
+package io.github.raphael.url_shortener.repository;
 
+import io.github.raphael.url_shortener.model.OriginalUrl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

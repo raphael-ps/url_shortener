@@ -1,4 +1,4 @@
-package io.github.raphael.url_shortener.infra;
+package io.github.raphael.url_shortener.exception;
 
 
 import org.hibernate.exception.ConstraintViolationException;
