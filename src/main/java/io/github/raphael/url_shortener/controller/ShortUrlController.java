@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ShortUrlController {
 
     private final OriginalUrlRepository originalUrlRepository;
@@ -75,7 +76,7 @@ public class ShortUrlController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.status(HttpStatus.FOUND).header("Location", originalUrlOptional.get().getUrl()).build();
+        return ResponseEntity.status(HttpStatus.OK).body(originalUrlOptional.get().getUrl());
     }
 
     @Transactional

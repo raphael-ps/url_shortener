@@ -1,6 +1,9 @@
-C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\controllers\RootController.java
-C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\domain\urls\ResquestUrlPostDTO.java
-C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\domain\urls\Url.java
-C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\domain\urls\UrlRepository.java
-C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\infra\RequestExceptionHandler.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\controller\ShortUrlController.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\dto\RequestShortUrlPostDTO.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\dto\RequestValidatePasswordDTO.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\exception\RequestExceptionHandler.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\model\OriginalUrl.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\model\ShortUrl.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\repository\OriginalUrlRepository.java
+C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\repository\ShortUrlRepository.java
 C:\Users\rapha\OneDrive\Documentos\GitHub\url_shortener\src\main\java\io\github\raphael\url_shortener\UrlShortenerApplication.java
