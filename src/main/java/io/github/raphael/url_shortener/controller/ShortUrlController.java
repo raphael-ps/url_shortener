@@ -50,7 +50,7 @@ public class ShortUrlController {
         shortUrl.setUrl_id(originalUrl.getId());
         shortUrlRepository.save(shortUrl);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(shortUrl.getNickname());
     }
 
     @GetMapping("/{url_nickname}")
@@ -80,7 +80,7 @@ public class ShortUrlController {
     }
 
     @Transactional
-    @GetMapping("/{nickname}/validate-password")
+    @PostMapping("/{nickname}/validate-password")
     public ResponseEntity<String> validatePassword(@PathVariable String nickname, @RequestBody RequestValidatePasswordDTO info){
         Optional<ShortUrl> optionalShortUrl = shortUrlRepository.findByNickname(nickname);
 
@@ -97,7 +97,7 @@ public class ShortUrlController {
             }
 
             shortenedUrl.setAccesses_count(shortenedUrl.getAccesses_count() + 1);
-            return ResponseEntity.status(HttpStatus.FOUND).header("Location", optionalUrl.get().getUrl()).build();
+            return ResponseEntity.status(HttpStatus.OK).body(optionalUrl.get().getUrl());
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("INCORRECT PASSWORD.");
