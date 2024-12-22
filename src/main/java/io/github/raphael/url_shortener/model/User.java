@@ -1,6 +1,6 @@
 package io.github.raphael.url_shortener.model;
 
-import io.github.raphael.url_shortener.dto.RequestUserPostDTO;
+import io.github.raphael.url_shortener.dto.RequestRegisterPostDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -24,7 +24,7 @@ public class User {
     private String password;
     private Instant createdAt;
 
-    public User(RequestUserPostDTO newUser){
+    public User(RequestRegisterPostDTO newUser){
         this.email = newUser.email().trim();
         this.password = BCrypt.hashpw(newUser.password(), BCrypt.gensalt());
         this.username = newUser.username().trim();

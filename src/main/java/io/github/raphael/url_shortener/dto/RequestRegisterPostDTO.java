@@ -2,7 +2,7 @@ package io.github.raphael.url_shortener.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record RequestUserPostDTO(
+public record RequestRegisterPostDTO(
         @NotBlank
         String username,
         @NotBlank

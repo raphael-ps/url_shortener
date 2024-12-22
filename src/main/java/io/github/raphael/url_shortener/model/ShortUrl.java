@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Table(name = "short_url")
 @Entity(name = "short_url")
@@ -35,7 +36,7 @@ public class ShortUrl {
         this.user_id = url.user_id();
 
         if (url.expirationDate() == null){
-            this.expiration_date = Instant.now().plus(Duration.ofDays(3));
+            this.expiration_date = LocalDateTime.now().plusDays(3).toInstant(ZoneOffset.of("-3"));
         } else {
             this.expiration_date = url.expirationDate();
         }
