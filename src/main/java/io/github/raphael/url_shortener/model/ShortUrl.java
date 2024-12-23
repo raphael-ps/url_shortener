@@ -1,5 +1,6 @@
 package io.github.raphael.url_shortener.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.raphael.url_shortener.dto.RequestShortUrlPostDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,10 +21,17 @@ import java.time.ZoneOffset;
 public class ShortUrl {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private String url_id;
-    private String user_id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "url_id", referencedColumnName = "id")
+    @JsonManagedReference
+    private OriginalUrl originalUrl;
+
+    @Column(name = "user_id")
+    private String userId;
     private String nickname;
-    private int clicks_count;
+    @Column(name = "clicks_count")
+    private int clicksCount;
     private int accesses_count;
     private Instant creation_date;
     private Instant expiration_date;
@@ -33,7 +41,7 @@ public class ShortUrl {
         this.nickname = url.nickname();
         this.creation_date = Instant.now();
         this.password = url.password() == null ? null : BCrypt.hashpw(url.password(), BCrypt.gensalt());
-        this.user_id = url.user_id();
+        this.userId = url.user_id();
 
         if (url.expirationDate() == null){
             this.expiration_date = LocalDateTime.now().plusDays(3).toInstant(ZoneOffset.of("-3"));

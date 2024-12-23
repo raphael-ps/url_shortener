@@ -47,7 +47,7 @@ public class ShortUrlController {
         }
 
         ShortUrl shortUrl = new ShortUrl(newUrl);
-        shortUrl.setUrl_id(originalUrl.getId());
+        shortUrl.setOriginalUrl(originalUrl);
         shortUrlRepository.save(shortUrl);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(shortUrl.getNickname());
@@ -63,20 +63,15 @@ public class ShortUrlController {
         }
 
         ShortUrl shortUrl = urlOptional.get();
-        shortUrl.setClicks_count(shortUrl.getClicks_count() + 1);
+        shortUrl.setClicksCount(shortUrl.getClicksCount() + 1);
 
         if (shortUrl.getPassword() != null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Shortened link protected with password.");
         }
 
         shortUrl.setAccesses_count(shortUrl.getAccesses_count() + 1);
-        Optional<OriginalUrl> originalUrlOptional = originalUrlRepository.findById(shortUrl.getUrl_id());
 
-        if (originalUrlOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(originalUrlOptional.get().getUrl());
+        return ResponseEntity.status(HttpStatus.OK).body(shortUrl.getOriginalUrl().getUrl());
     }
 
     @Transactional
@@ -90,14 +85,8 @@ public class ShortUrlController {
         ShortUrl shortenedUrl = optionalShortUrl.get();
 
         if (BCrypt.checkpw(info.password(), shortenedUrl.getPassword())){
-            Optional<OriginalUrl> optionalUrl = originalUrlRepository.findById(shortenedUrl.getUrl_id());
-
-            if (optionalUrl.isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-
             shortenedUrl.setAccesses_count(shortenedUrl.getAccesses_count() + 1);
-            return ResponseEntity.status(HttpStatus.OK).body(optionalUrl.get().getUrl());
+            return ResponseEntity.status(HttpStatus.OK).body(shortenedUrl.getOriginalUrl().getUrl());
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("INCORRECT PASSWORD.");
