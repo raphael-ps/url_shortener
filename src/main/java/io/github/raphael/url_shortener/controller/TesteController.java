@@ -25,7 +25,7 @@ public class TesteController {
     private final UserRepository userRepository;
 
     @GetMapping("/teste")
-    public ResponseEntity getUserHistory(@RequestBody @NotBlank String userId){
+    public ResponseEntity<List<ShortUrl>> getUserHistory(@RequestBody @NotBlank String userId){
         userId = userId.replace("\"", "");
         System.out.println(userId);
         List<ShortUrl> userShortenUrls = shortUrlRepository.findAllByUserId(userId);

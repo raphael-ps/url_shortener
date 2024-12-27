@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.management.RuntimeErrorException;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +31,14 @@ public class ShortUrlController {
     public ShortUrlController(ShortUrlRepository shortUrlRepository, OriginalUrlRepository originalUrlRepository) {
         this.shortUrlRepository = shortUrlRepository;
         this.originalUrlRepository = originalUrlRepository;
+    }
+
+    @GetMapping("/stats/{nickname}")
+    public ResponseEntity<ShortUrl> urlStats(@PathVariable String nickname){
+        System.out.println(nickname);
+        ShortUrl url = shortUrlRepository.findByNickname(nickname).orElseThrow();
+
+        return ResponseEntity.ok(url);
     }
 
     @PostMapping("/shorten")
