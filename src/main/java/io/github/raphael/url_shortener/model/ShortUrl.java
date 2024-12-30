@@ -27,7 +27,7 @@ public class ShortUrl {
     @JsonManagedReference
     private OriginalUrl originalUrl;
 
-    @Column(name = "user_id")
+    @Column(name = "userId")
     private String userId;
     private String nickname;
     @Column(name = "clicks_count")
@@ -41,7 +41,7 @@ public class ShortUrl {
         this.nickname = url.nickname();
         this.creation_date = Instant.now();
         this.password = url.password() == null ? null : BCrypt.hashpw(url.password(), BCrypt.gensalt());
-        this.userId = url.user_id();
+        this.userId = url.userId();
 
         if (url.expirationDate() == null){
             this.expiration_date = LocalDateTime.now().plusDays(3).toInstant(ZoneOffset.of("-3"));

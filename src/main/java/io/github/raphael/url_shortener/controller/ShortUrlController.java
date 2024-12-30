@@ -16,8 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.management.RuntimeErrorException;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/")
@@ -40,7 +42,6 @@ public class ShortUrlController {
 
         return ResponseEntity.ok(url);
     }
-
     @PostMapping("/shorten")
     public ResponseEntity<String> registerUrl(@RequestBody @Valid RequestShortUrlPostDTO newUrl){
 
@@ -66,7 +67,6 @@ public class ShortUrlController {
     @Transactional
     public ResponseEntity<String> fetchSorthenedUrl(@PathVariable String url_nickname){
         Optional<ShortUrl> urlOptional = shortUrlRepository.findByNickname(url_nickname);
-
         if (urlOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -75,11 +75,13 @@ public class ShortUrlController {
         shortUrl.setClicksCount(shortUrl.getClicksCount() + 1);
 
         if (shortUrl.getPassword() != null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Shortened link protected with password.");
+            String requestId = UUID.randomUUID().toString(); // Identificador único
+            System.out.println(LocalDateTime.now() + " - Request ID: " + requestId + ", protected");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Shortened link protected with password.");
         }
 
         shortUrl.setAccesses_count(shortUrl.getAccesses_count() + 1);
-
+        System.out.println("to aqui");
         return ResponseEntity.status(HttpStatus.OK).body(shortUrl.getOriginalUrl().getUrl());
     }
 
@@ -92,7 +94,7 @@ public class ShortUrlController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         ShortUrl shortenedUrl = optionalShortUrl.get();
-
+        System.out.println("validando");
         if (BCrypt.checkpw(info.password(), shortenedUrl.getPassword())){
             shortenedUrl.setAccesses_count(shortenedUrl.getAccesses_count() + 1);
             return ResponseEntity.status(HttpStatus.OK).body(shortenedUrl.getOriginalUrl().getUrl());
